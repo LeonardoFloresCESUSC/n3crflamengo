@@ -1,2 +1,3 @@
-from funcoes import *
-cabecalho()
+import funcoes
+funcoes.cabecalho()
+funcoes.menu()
