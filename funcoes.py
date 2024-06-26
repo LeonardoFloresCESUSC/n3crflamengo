@@ -1,5 +1,17 @@
 import json
 
+#Função pegar os dados do arquivo json
+#Pegar dados
+def pegardados():
+    #Essa função tentará buscar um arquivo Dados.txt
+    try:
+        with open('Dados.txt', 'r') as arquivo:
+        # Inicializar uma lista para armazenar os dados dos alunos
+            return json.load(arquivo)
+    #Caso a função não encontre o arquivo Dados.txt ela retornará um dicionário vazio
+    except Exception as e:
+        return {}
+
 #Função Cabeçalho
 def cabecalho():
 #cabecalho
@@ -12,11 +24,12 @@ def cabecalho():
     print('Aluno: Leonardo Flores')
     print('Avaliação: N2/N3')
     print('*'*44)
+    print()
     
 
 #Função Menu
 def menu():
-    #menu
+#menu
     while True:
         print('Bem vindos ao CR Flamengo!')
         print('Menu de escolha de opções: ')
@@ -49,8 +62,13 @@ def menu():
             print('Opção inválida, digite um número conforme as oções mencioandas')
 
 
+
+    
+
 #Função Cadastrar
 def cadastrar():
+#Cadastrar
+    #DÚVIDA: por quê usar o try nessa função
     try:
         #Solicitar ao usuário as informações do aluno
         nomealuno = input('Informe o nome do(a) aluno(a): ')    
@@ -65,18 +83,18 @@ def cadastrar():
         cep = input('Informe o seu CEP: ')
 
         alunos=pegardados()
-        print(alunos)
-        #Gerador de IDs
-        #Pega o maior ID e adiciona 1       
+        
+    #Gerador de IDs
+    #Pega o maior ID e adiciona 1       
+        #Variável utilizada com a finalidade do primeiro ID ser 1
+        #
         alunoid=0
         if alunos:
             for id in alunos.keys():
                 if int(id)>int(alunoid):
                     alunoid=id
         alunoid=int(alunoid)+1
-
-        print(alunoid)
-        #Adiciona o ID gerado na chave json
+        #Adiciona o ID gerado como chave em json "na memória do sistema"
         alunos[str(alunoid)]={
                 'Nome do aluno' :nomealuno,
                 'Idade do aluno': idadealuno,
@@ -88,14 +106,14 @@ def cadastrar():
                 'Cidade': cidade,
                 'Estado': estado,
                 'CEP':cep
-        
                 }
-        
+        #Grava o arquivo json "da memória do sistema" em um arquivo Dados.txt
+        #Caso não tenha um arquivo Dados.txt ele será criado neste momento
         with open('Dados.txt', 'w') as arquivo:
-            json.dump(alunos, arquivo)
-        
+            json.dump(alunos, arquivo)        
 
         #Exibir uma mensagem de sucesso
+        print()
         print('*'*44)
         print()
         print('Dados do(a) aluno(a) cadastrados com sucesso!')
@@ -110,63 +128,63 @@ def cadastrar():
         #Capturar qualquer outro erro que possa ocorrer durante o cadastro dos dados
         print('Ocorreu um erro ao cadastrar os dados:', str(e))
 
-#Função pegar os dados do arquivo json
-def pegardados():
-    try:
-        with open('Dados.txt', 'r') as arquivo:
-        # Inicializar uma lista para armazenar os dados dos alunos
-            return json.load(arquivo)
-    except Exception as e:
-        return {}
-
 
 # Função Listar
+#Listar dados
 def listar():
     try:
         alunos= pegardados()
-        # Ler cada linha do arquivo
+        #Ler cada linha do arquivo
         for alunoid, dados in alunos.items():
-
-            # Imprimir os dados dos alunos
-            print()
-            print('*' * 40)
-            print('Aluno ID: ', alunoid)
-            print('Nome do aluno: ', dados['Nome do aluno'])
-            print('Idade do aluno: ', dados ['Idade do aluno'])
-            print('Sexo do aluno: ', dados['Sexo do aluno'])
-            print('Nome do responsável: ', dados['Nome do responsável'])
-            print('Telefone do responsável: ', dados['Telefone do responsável'])
-            print('CPF do responsável: ', dados['CPF do responsável'])
-            print('Endereço: ', dados['Endereço'])
-            print('Cidade: ', dados['Cidade'])
-            print('Estado: ', dados['Estado'])
-            print('CEP: ', dados['CEP'])
-            print('*' * 40)
-            print()
-
+            if not dados in alunos:
+                print()
+                print('*'*44)
+                print("Nenhum dado de aluno cadastrado.")
+                print('*'*44)
+                print()
+            else:
+                # Imprimir os dados dos alunos
+                print()
+                print('*' * 40)
+                print('Aluno ID: ', alunoid)
+                print('Nome do aluno: ', dados['Nome do aluno'])
+                print('Idade do aluno: ', dados ['Idade do aluno'])
+                print('Sexo do aluno: ', dados['Sexo do aluno'])
+                print('Nome do responsável: ', dados['Nome do responsável'])
+                print('Telefone do responsável: ', dados['Telefone do responsável'])
+                print('CPF do responsável: ', dados['CPF do responsável'])
+                print('Endereço: ', dados['Endereço'])
+                print('Cidade: ', dados['Cidade'])
+                print('Estado: ', dados['Estado'])
+                print('CEP: ', dados['CEP'])
+                print('*' * 40)
+                print()
     except FileNotFoundError:
-        print("Arquivo 'Dados.txt' não encontrado.")
+        print(f'Arquivo Dados.txt não encontrado.')
     except Exception as e:
-        print(f"Ocorreu um erro: {e}")
+        print(f'Ocorreu um erro: {e}')
 
-    
 
-# #Função Alterar Dados
+#Função Alterar Dados
+#Alterar dados
 def alterar():
     alunos=pegardados()
-
     for alunoid, dados in alunos.items():
         print(alunoid, " ", dados['Nome do aluno'])
-
     alteraraluno = input('Digite o ID do aluno: ')
     print('ID selecionado: ', alteraraluno)
-
+    #Verificar a existência do ID informado pelo usuário dentro de Dados.txt
     existAluno = False
+    #Para tanto, o "for" irá percorrer todos os "alunoid" dentro do Dados.txt
     for alunoid, dados in alunos.items():
         if int(alunoid) == int(alteraraluno):
             existAluno = True
-        
+    #Caso o ID não exista cairá no else abaixo.
+    #Caso o ID exista abrirá novamento os todos os campos para a alteração
+    #OBS: Todos os campos deverão ser preenchidos novamente
+    #Os dados serão sobrescritos no ID mencionado        
     if existAluno:
+        print('Digite todos os campos')
         nomealuno = input('Informe o nome do(a) aluno(a): ')    
         idadealuno = input('Informe a idade do(a) aluno(a): ')
         sexoaluno = input('Informe o sexo do(a) aluno(a) (masculino ou feminino): ')
@@ -177,7 +195,9 @@ def alterar():
         cidade = input('Informe sua cidade: ')
         estado = input('Informe seu Estado: ') 
         cep = input('Informe o seu CEP: ')
-
+        
+        #Alterando a classe de alteraralunos para string
+        #Passo necessário para salvar no Dados.txt
         alunos[str(alteraraluno)]={
                 'Nome do aluno' :nomealuno,
                 'Idade do aluno': idadealuno,
@@ -189,21 +209,37 @@ def alterar():
                 'Cidade': cidade,
                 'Estado': estado,
                 'CEP':cep
-        
-                }
-        
+                }  
+        #Escrevendo os dados no arquivo Dados.txt
         with open('Dados.txt', 'w') as arquivo:
-            json.dump(alunos, arquivo)
-        
-
+            json.dump(alunos, arquivo)    
     else:
-        print("Aluno seleconado n existe.")
+        print("O ID do aluno seleconado não existe, por favor selecione um ID existente conforme nossa lista.")
             
 
+#Função Excluir Registro
+def excluir():
+    try:
+        alunos=pegardados()
 
-# #Função Excluir Registro
-# def excluir():
-#ao inves do dump usar o outro codigo para tirarr o json
+        for alunoid, dados in alunos.items():
+            print(alunoid, " ", dados['Nome do aluno'])
+        excluirid = input('Digite o ID do aluno a ser excluído: ')
+        if excluirid in alunos.keys():
+            print('ID existente.')
+            alunos.pop(excluirid)
+            print(f'O aluno de ID', {excluirid}, 'foi excluído com sucesso.') 
+            #Escrevendo os dados no arquivo Dados.txt
+            with open('Dados.txt', 'w') as arquivo:
+                json.dump(alunos, arquivo)             
+        else:
+            print('Opção inválida, digite um ID conforme as oções informadas')
+        #s_ou_n_excluirid = input('Tem certeza que desea excluir o aluno de ID: ', excluirid, '? Digite "s" para confirmar a exclusão ou "n" para canelar a operação.')
+    except ValueError:
+        print("Valor inválido. Certifique-se de digitar um valor numérico para o código do aluno.")
+    except Exception as e:
+        print("Ocorreu um erro ao excluir os dados:", str(e))
+
 
 #del
 # #Função Fazer Backup
