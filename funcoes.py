@@ -132,22 +132,30 @@ def listar():
     try:
         alunos= pegardados()
         #Ler cada linha do arquivo
-        for alunoid, dados in alunos.items():               
-            #Imprimir os dados dos alunos
+        if alunos:
+            for alunoid, dados in alunos.items():               
+                #Imprimir os dados dos alunos
+                print()
+                print('*' * 40)
+                print('Aluno ID: ', alunoid)
+                print('Nome do aluno: ', dados['Nome do aluno'])
+                print('Idade do aluno: ', dados ['Idade do aluno'])
+                print('Sexo do aluno: ', dados['Sexo do aluno'])
+                print('Nome do responsável: ', dados['Nome do responsável'])
+                print('Telefone do responsável: ', dados['Telefone do responsável'])
+                print('CPF do responsável: ', dados['CPF do responsável'])
+                print('Endereço: ', dados['Endereço'])
+                print('Cidade: ', dados['Cidade'])
+                print('Estado: ', dados['Estado'])
+                print('CEP: ', dados['CEP'])
+                print('*' * 40)
+                print()
+        else:
             print()
-            print('*' * 40)
-            print('Aluno ID: ', alunoid)
-            print('Nome do aluno: ', dados['Nome do aluno'])
-            print('Idade do aluno: ', dados ['Idade do aluno'])
-            print('Sexo do aluno: ', dados['Sexo do aluno'])
-            print('Nome do responsável: ', dados['Nome do responsável'])
-            print('Telefone do responsável: ', dados['Telefone do responsável'])
-            print('CPF do responsável: ', dados['CPF do responsável'])
-            print('Endereço: ', dados['Endereço'])
-            print('Cidade: ', dados['Cidade'])
-            print('Estado: ', dados['Estado'])
-            print('CEP: ', dados['CEP'])
-            print('*' * 40)
+            print('*')
+            print()
+            print('Nenhum dado cadastrado')
+            print('*')
             print()
     except FileNotFoundError:
         print(f'Arquivo Dados.txt não encontrado.')
