@@ -136,13 +136,7 @@ def listar():
         alunos= pegardados()
         #Ler cada linha do arquivo
         for alunoid, dados in alunos.items():
-            if not dados in alunos:
-                print()
-                print('*'*44)
-                print("Nenhum dado de aluno cadastrado.")
-                print('*'*44)
-                print()
-            else:
+            if alunos.keys():                
                 # Imprimir os dados dos alunos
                 print()
                 print('*' * 40)
@@ -159,6 +153,13 @@ def listar():
                 print('CEP: ', dados['CEP'])
                 print('*' * 40)
                 print()
+
+            else:
+                print()
+                print('*'*44)
+                print("Nenhum dado de aluno cadastrado.")
+                print('*'*44)
+                print()    
     except FileNotFoundError:
         print(f'Arquivo Dados.txt não encontrado.')
     except Exception as e:
@@ -183,6 +184,14 @@ def alterar():
     #Caso o ID exista abrirá novamento os todos os campos para a alteração
     #OBS: Todos os campos deverão ser preenchidos novamente
     #Os dados serão sobrescritos no ID mencionado        
+        else:
+            print()
+            print('*'*44)
+            print()
+            print('ID inválido, por gentileza, verifique o caracter informado.')
+            print()
+            print('*'*44)
+            print()
     if existAluno:
         print('Digite todos os campos')
         nomealuno = input('Informe o nome do(a) aluno(a): ')    
@@ -212,10 +221,7 @@ def alterar():
                 }  
         #Escrevendo os dados no arquivo Dados.txt
         with open('Dados.txt', 'w') as arquivo:
-            json.dump(alunos, arquivo)    
-    else:
-        print("O ID do aluno seleconado não existe, por favor selecione um ID existente conforme nossa lista.")
-            
+            json.dump(alunos, arquivo)
 
 #Função Excluir Registro
 def excluir():
