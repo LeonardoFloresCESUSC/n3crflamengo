@@ -10,7 +10,7 @@ def pegardados():
             return json.load(arquivo)
     #Caso a função não encontre o arquivo Dados.txt ela retornará um dicionário vazio
     except Exception as e:
-        return {}
+        return print('Não há dados no arquivo, por favor, cadastre um aluno antes de listar.')
 
 #Função Cabeçalho
 def cabecalho():
@@ -61,9 +61,6 @@ def menu():
         else:
             print('Opção inválida, digite um número conforme as oções mencioandas')
 
-
-
-    
 
 #Função Cadastrar
 def cadastrar():
@@ -135,31 +132,23 @@ def listar():
     try:
         alunos= pegardados()
         #Ler cada linha do arquivo
-        for alunoid, dados in alunos.items():
-            if alunos.keys():                
-                # Imprimir os dados dos alunos
-                print()
-                print('*' * 40)
-                print('Aluno ID: ', alunoid)
-                print('Nome do aluno: ', dados['Nome do aluno'])
-                print('Idade do aluno: ', dados ['Idade do aluno'])
-                print('Sexo do aluno: ', dados['Sexo do aluno'])
-                print('Nome do responsável: ', dados['Nome do responsável'])
-                print('Telefone do responsável: ', dados['Telefone do responsável'])
-                print('CPF do responsável: ', dados['CPF do responsável'])
-                print('Endereço: ', dados['Endereço'])
-                print('Cidade: ', dados['Cidade'])
-                print('Estado: ', dados['Estado'])
-                print('CEP: ', dados['CEP'])
-                print('*' * 40)
-                print()
-
-            else:
-                print()
-                print('*'*44)
-                print("Nenhum dado de aluno cadastrado.")
-                print('*'*44)
-                print()    
+        for alunoid, dados in alunos.items():               
+            #Imprimir os dados dos alunos
+            print()
+            print('*' * 40)
+            print('Aluno ID: ', alunoid)
+            print('Nome do aluno: ', dados['Nome do aluno'])
+            print('Idade do aluno: ', dados ['Idade do aluno'])
+            print('Sexo do aluno: ', dados['Sexo do aluno'])
+            print('Nome do responsável: ', dados['Nome do responsável'])
+            print('Telefone do responsável: ', dados['Telefone do responsável'])
+            print('CPF do responsável: ', dados['CPF do responsável'])
+            print('Endereço: ', dados['Endereço'])
+            print('Cidade: ', dados['Cidade'])
+            print('Estado: ', dados['Estado'])
+            print('CEP: ', dados['CEP'])
+            print('*' * 40)
+            print()
     except FileNotFoundError:
         print(f'Arquivo Dados.txt não encontrado.')
     except Exception as e:
