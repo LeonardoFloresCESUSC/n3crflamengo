@@ -27,7 +27,6 @@ def cabecalho():
     print('Avaliação: N2/N3')
     print()
     print('*'*64)
-    print()
     
 
 #Função Menu
@@ -35,10 +34,12 @@ def menu():
 #menu
     while True:
         print()
-        print('*'*64)
+        print('****************************************************************')
         print()
-        print('Bem vindos ao CR Flamengo!')
+        print('*******************Bem vindos ao CR Flamengo!*******************')
+        print()
         print('Menu de escolha de opções: ')
+        print()
         print('1 - Cadastrar Dados')
         print('2 - Listar Dados')
         print('3 - Alterar Dados')
@@ -46,9 +47,7 @@ def menu():
         print('5 - Realizar Backup do arquivo')
         print('0 - Sair')
         print()
-        opcao= input('Digite uma opção aqui: ')
-        print()
-        print('*'*64)
+        opcao= input('Digite o número da opção desejada aqui: ')
         if opcao== '1':
             print()
             print('*'*64)
@@ -96,8 +95,6 @@ def cadastrar():
     #DÚVIDA: por quê usar o try nessa função
     try:
         #Solicitar ao usuário as informações do aluno
-        print()
-        print('*'*64)
         print()
         nomealuno = input('Informe o nome do(a) aluno(a): ')    
         idadealuno = input('Informe a idade do(a) aluno(a): ')
@@ -167,7 +164,7 @@ def listar():
             for alunoid, dados in alunos.items():               
                 #Imprimir os dados dos alunos
                 print()
-                print('*' * 40)
+                print('*' * 64)
                 print('Aluno ID: ', alunoid)
                 print('Nome do aluno: ', dados['Nome do aluno'])
                 print('Idade do aluno: ', dados ['Idade do aluno'])
@@ -179,7 +176,7 @@ def listar():
                 print('Cidade: ', dados['Cidade'])
                 print('Estado: ', dados['Estado'])
                 print('CEP: ', dados['CEP'])
-                print('*' * 40)
+                print('*' * 64)
                 print()
         else:
             print()
@@ -197,59 +194,68 @@ def listar():
 #Função Alterar Dados
 #Alterar dados
 def alterar():
-    alunos=pegardados()
-    for alunoid, dados in alunos.items():
-        print(alunoid, " ", dados['Nome do aluno'])
-        
-    alteraraluno = input('Digite o ID do aluno: ')
-    print('ID selecionado: ', alteraraluno)
-    #Verificar a existência do ID informado pelo usuário dentro de Dados.txt
-    existAluno = False
-    #Para tanto, o "for" irá percorrer todos os "alunoid" dentro do Dados.txt
-    for alunoid, dados in alunos.items():
-        if int(alunoid) == int(alteraraluno):
-            existAluno = True
-            break
-    #Caso o ID não exista cairá no else abaixo.
-    #Caso o ID exista abrirá novamente os todos os campos para a alteração
-    #OBS: Todos os campos deverão ser preenchidos novamente
-    #Os dados serão sobrescritos no ID mencionado        
-    if existAluno:
-        print('Digite todos os campos')
-        nomealuno = input('Informe o nome do(a) aluno(a): ')    
-        idadealuno = input('Informe a idade do(a) aluno(a): ')
-        sexoaluno = input('Informe o sexo do(a) aluno(a) (masculino ou feminino): ')
-        nomeresponsavel = input('Informe o nome do(a) responsável pelo(a) aluno(a): ')
-        telefone = input('Informe o telefone do(a) responsável: ')
-        cpfresponsavel = input('Informe o CPF do(a) responsável: ')
-        endereco = input('Informe seu endereço: ')
-        cidade = input('Informe sua cidade: ')
-        estado = input('Informe seu Estado: ') 
-        cep = input('Informe o seu CEP: ')
-        
-    #Alterando a classe de alteraralunos para string
-    #Passo necessário para salvar no Dados.txt
-        alunos[str(alteraraluno)]={
-            'Nome do aluno' :nomealuno,
-            'Idade do aluno': idadealuno,
-            'Sexo do aluno': sexoaluno,
-            'Nome do responsável': nomeresponsavel,
-            'Telefone do responsável': telefone,
-            'CPF do responsável': cpfresponsavel,
-            'Endereço': endereco,
-            'Cidade': cidade,
-            'Estado': estado,
-            'CEP':cep
-            }  
-        #Escrevendo os dados no arquivo Dados.txt
-        with open('Dados.txt', 'w') as arquivo:
-            json.dump(alunos, arquivo)
+    try:
+        alunos=pegardados()
+        for alunoid, dados in alunos.items():
+            print(alunoid, " ", dados['Nome do aluno'])
+            
+        alteraraluno = input('Digite o ID do aluno: ')
+        print('ID selecionado: ', alteraraluno)
+        #Verificar a existência do ID informado pelo usuário dentro de Dados.txt
+        existAluno = False
+        #Para tanto, o "for" irá percorrer todos os "alunoid" dentro do Dados.txt
+        for alunoid, dados in alunos.items():
+            if int(alunoid) == int(alteraraluno):
+                existAluno = True
+                break
+        #Caso o ID não exista cairá no else abaixo.
+        #Caso o ID exista abrirá novamente os todos os campos para a alteração
+        #OBS: Todos os campos deverão ser preenchidos novamente
+        #Os dados serão sobrescritos no ID mencionado        
+        if existAluno:
+            print('Digite todos os campos')
+            nomealuno = input('Informe o nome do(a) aluno(a): ')    
+            idadealuno = input('Informe a idade do(a) aluno(a): ')
+            sexoaluno = input('Informe o sexo do(a) aluno(a) (masculino ou feminino): ')
+            nomeresponsavel = input('Informe o nome do(a) responsável pelo(a) aluno(a): ')
+            telefone = input('Informe o telefone do(a) responsável: ')
+            cpfresponsavel = input('Informe o CPF do(a) responsável: ')
+            endereco = input('Informe seu endereço: ')
+            cidade = input('Informe sua cidade: ')
+            estado = input('Informe seu Estado: ') 
+            cep = input('Informe o seu CEP: ')
+            
+        #Alterando a classe de alteraralunos para string
+        #Passo necessário para salvar no Dados.txt
+            alunos[str(alteraraluno)]={
+                'Nome do aluno' :nomealuno,
+                'Idade do aluno': idadealuno,
+                'Sexo do aluno': sexoaluno,
+                'Nome do responsável': nomeresponsavel,
+                'Telefone do responsável': telefone,
+                'CPF do responsável': cpfresponsavel,
+                'Endereço': endereco,
+                'Cidade': cidade,
+                'Estado': estado,
+                'CEP':cep
+                }  
+            #Escrevendo os dados no arquivo Dados.txt
+            with open('Dados.txt', 'w') as arquivo:
+                json.dump(alunos, arquivo)
+                print('*'*64)
+                print()
+                print('Os dados do aluno de ID', alteraraluno,'foram alterados com sucesso!' )
+                print()
+                print('*'*64)
+        else:
+            print()
             print('*'*64)
             print()
-            print('Os dados do aluno de ID', alteraraluno,'foram alterados com sucesso!' )
+            print('ID inválido, por gentileza, verifique o caracter informado.')
             print()
             print('*'*64)
-    else:
+            print()
+    except ValueError:
         print()
         print('*'*64)
         print()
@@ -258,6 +264,7 @@ def alterar():
         print('*'*64)
         print()
     
+
 #Função Excluir Registro
 def excluir():
     try:
@@ -269,7 +276,7 @@ def excluir():
         if excluirid in alunos.keys():
             print('ID existente.')
             alunos.pop(excluirid)
-            print(f'O aluno de ID', {excluirid}, 'foi excluído com sucesso.') 
+            print('O aluno de ID', excluirid, 'foi excluído com sucesso.') 
             #Escrevendo os dados no arquivo Dados.txt
             with open('Dados.txt', 'w') as arquivo:
                 json.dump(alunos, arquivo)             
