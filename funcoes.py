@@ -25,8 +25,6 @@ def cabecalho():
     print('Prof. Roberto Fabiano Fernandes')
     print('Aluno: Leonardo Flores')
     print('Avaliação: N2/N3')
-    print()
-    print('*'*64)
     
 
 #Função Menu
@@ -142,10 +140,10 @@ def cadastrar():
         print('*'*64)
         print()
         print('Dados do(a) aluno(a) cadastrados com sucesso!')
+        print()
         print('O ID do aluno ', nomealuno, ' é: ', alunoid)
         print()
         print('*'*64)
-        print()
     except ValueError:
         #Capturar um erro caso os valores fornecidos pelo usuário não estejam no formato esperado
         print('Valor inválido. Verifique as informações e tente novamente')
@@ -163,7 +161,6 @@ def listar():
         if alunos:
             for alunoid, dados in alunos.items():               
                 #Imprimir os dados dos alunos
-                print()
                 print('*' * 64)
                 print('Aluno ID: ', alunoid)
                 print('Nome do aluno: ', dados['Nome do aluno'])
@@ -196,11 +193,13 @@ def listar():
 def alterar():
     try:
         alunos=pegardados()
+        print()
         for alunoid, dados in alunos.items():
             print(alunoid, " ", dados['Nome do aluno'])
-            
+        print()
         alteraraluno = input('Digite o ID do aluno: ')
         print('ID selecionado: ', alteraraluno)
+        print()
         #Verificar a existência do ID informado pelo usuário dentro de Dados.txt
         existAluno = False
         #Para tanto, o "for" irá percorrer todos os "alunoid" dentro do Dados.txt
@@ -254,7 +253,6 @@ def alterar():
             print('ID inválido, por gentileza, verifique o caracter informado.')
             print()
             print('*'*64)
-            print()
     except ValueError:
         print()
         print('*'*64)
@@ -262,7 +260,6 @@ def alterar():
         print('ID inválido, por gentileza, verifique o caracter informado.')
         print()
         print('*'*64)
-        print()
     
 
 #Função Excluir Registro
@@ -272,9 +269,11 @@ def excluir():
 
         for alunoid, dados in alunos.items():
             print(alunoid, " ", dados['Nome do aluno'])
+        print()
         excluirid = input('Digite o ID do aluno a ser excluído: ')
         if excluirid in alunos.keys():
             print('ID existente.')
+            print()
             alunos.pop(excluirid)
             print('O aluno de ID', excluirid, 'foi excluído com sucesso.') 
             #Escrevendo os dados no arquivo Dados.txt
@@ -284,9 +283,19 @@ def excluir():
             print('Opção inválida, digite um ID conforme as oções informadas')
         #s_ou_n_excluirid = input('Tem certeza que desea excluir o aluno de ID: ', excluirid, '? Digite "s" para confirmar a exclusão ou "n" para canelar a operação.')
     except ValueError:
+        print()
+        print('*'*64)
+        print()
         print("Valor inválido. Certifique-se de digitar um valor numérico para o código do aluno.")
+        print()
+        print('*'*64)
     except Exception as e:
+        print()
+        print('*'*64)
+        print()
         print("Ocorreu um erro ao excluir os dados:", str(e))
+        print()
+        print('*'*64)
 
 #Função Fazer Backup
 def fazer_backup():
@@ -300,8 +309,17 @@ def fazer_backup():
         print('Backup do arquivo realizado com sucesso!')
         print()
         print('*'*64)
-        print()
     except FileNotFoundError:
+        print()
+        print('*'*64)
+        print()
         print('O arquivo Dados.txt não foi encontrado.')
+        print()
+        print('*'*64)
     except Exception as e:
+        print()
+        print('*'*64)
+        print()
         print('Ocorreu um erro ao realizar o backup: ', str(e))
+        print()
+        print('*'*64)
